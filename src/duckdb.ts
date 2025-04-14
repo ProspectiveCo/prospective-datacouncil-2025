@@ -38,11 +38,27 @@ console.log('DuckDB-wasm instantiated');
 
 
 // insert data from parquet file
-const datafileUrl = 'https://perspective-demo-dataset.s3.us-east-1.amazonaws.com/pudl/generators_monthly_2022-2023_lg.parquet';
+const dataFile = 'https://perspective-demo-dataset.s3.us-east-1.amazonaws.com/pudl/generators_monthly_2022-2023_lg.parquet';
 await conn.query(`
     CREATE TABLE generators AS
-        SELECT * FROM '${datafileUrl}'
+        SELECT * FROM '${dataFile}'
 `);
-const result2 = await conn.query("SELECT COUNT(*) FROM generators limit 10;");
-console.log(`rows: ${result2.numRows}`);
-console.log(result2.toString());
+
+
+let result = await conn.query("SELECT * FROM generators ORDER BY report_date;");
+console.log(`rows: ${result.numRows}`);
+for (let i = 0; i < result.numRows; i++) {
+    const row = result.get(i)!;
+    if (i >= 554540) {
+        const report_date = new Date(row['report_date']).toISOString();
+        console.log(`row ${i}: plant_name: ${row['plant_name_eia']}, date: ${report_date}, city: ${row['city']}`);
+    }
+}
+
+result = await conn.query("SELECT COUNT(*) as 'numrows' FROM generators limit 10;");
+console.log(`rows: ${result.numRows}`);
+console.log(result.toString());
+
+const statusDiv = document.querySelector<HTMLDivElement>('#status')!;
+const firstRow = result.get(0)!['numrows'];
+statusDiv.innerHTML = `duckdb loaded: ${firstRow}`;

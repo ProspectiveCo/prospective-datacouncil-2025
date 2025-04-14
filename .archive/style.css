@@ -25,8 +25,7 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: stretch center;
-  flex-direction: column;
+  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -36,29 +35,11 @@ h1 {
   line-height: 1.1;
 }
 
-.label-text {
-  font-size: 1.2em;
-  font-weight: 500;
-  line-height: 1.5;
-  padding: 2rem;
-}
-
-.label-text--small {
-  font-size: 1em;
-  font-weight: 400;
-  padding: 2rem;
-}
-
 #app {
   max-width: 1280px;
-  /* margin: 0 auto; */
+  margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
-
-#status {
-  max-width: 1280px;
-  text-align: left;
 }
 
 .logo {
