@@ -5,6 +5,10 @@
     <link rel="icon" type="image/svg+xml" href="/prospective.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="DuckDB + Perspective" />
+
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@finos/perspective@3.5.1/dist/wasm/perspective-server.wasm" as="fetch" type="application/wasm" crossorigin="anonymous" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@finos/perspective-viewer@3.5.1/dist/wasm/perspective-viewer.wasm" as="fetch" type="application/wasm" crossorigin="anonymous" />
+    <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/@finos/perspective-viewer@3.5.1/dist/css/themes.css" />
     
     <title>DuckDB + Perspective</title>
 
@@ -12,8 +16,15 @@
   </head>
   <body>
     <div id="status" class="label-text"></div>
-    <div id="app"></div>
-    <div id="perspective-container"></div>
+    <div id="app">
+      <div id="table-controls">
+        <button id="download-arrow">Download CSV</button>
+        <button id="download-parquet">Download Parquet</button>
+      </div>
+    </div>
+    <div id="perspective-container">
+      <perspective-viewer id="viewer" theme="Pro Dark"></perspective-viewer>
+    </div>
     <script type="module" src="/src/main.ts"></script>
     <script type="module" src="/src/duckdb.js"></script>
   </body>

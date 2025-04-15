@@ -6,16 +6,25 @@ import eh_worker from '@duckdb/duckdb-wasm/dist/duckdb-browser-eh.worker.js?url'
 
 
 // Perspective imports
-import perspective_viewer from "@finos/perspective-viewer";
-import perspective from "@finos/perspective";
+// import perspective_viewer from "@finos/perspective-viewer";
+// import perspective from "@finos/perspective";
 
-import SERVER_WASM from "@finos/perspective/dist/wasm/perspective-server.wasm?url";
-import CLIENT_WASM from "@finos/perspective-viewer/dist/wasm/perspective-viewer.wasm?url";
+// import SERVER_WASM from "@finos/perspective/dist/wasm/perspective-server.wasm?url";
+// import CLIENT_WASM from "@finos/perspective-viewer/dist/wasm/perspective-viewer.wasm?url";
+// import { PerspectiveViewerElement } from '@finos/perspective-viewer/dist/wasm/perspective-viewer.js';
+// import { PerspectiveViewerElementExt } from '@finos/perspective-viewer/src/ts/extensions.js';
 
-await Promise.all([
-    perspective.init_server(fetch(SERVER_WASM)),
-    perspective_viewer.init_client(fetch(CLIENT_WASM)),
-]);
+import "https://cdn.jsdelivr.net/npm/@finos/perspective-viewer@3.5.1/dist/cdn/perspective-viewer.js";
+import "https://cdn.jsdelivr.net/npm/@finos/perspective-viewer-datagrid@3.5.1/dist/cdn/perspective-viewer-datagrid.js";
+import "https://cdn.jsdelivr.net/npm/@finos/perspective-viewer-d3fc@3.5.1/dist/cdn/perspective-viewer-d3fc.js";
+
+import perspective from "https://cdn.jsdelivr.net/npm/@finos/perspective@3.5.1/dist/cdn/perspective.js";
+
+
+// await Promise.all([
+//     perspective.init_server(fetch(SERVER_WASM)),
+//     perspective_viewer.init_client(fetch(CLIENT_WASM)),
+// ]);
 
 // Now Perspective API will work!
 const client = await perspective.worker();
@@ -83,7 +92,9 @@ const nrows = result.get(0)!['numrows'];
 statusDiv.innerHTML = `duckdb loaded: ${nrows.toLocaleString()} rows`;
 
 
-const viewer = document.createElement("perspective-viewer");
+// const viewer = document.createElement("perspective-viewer");
+const viewer = document.getElementById("viewer")! as unknown as PerspectiveViewerElement;
+// const viewer = document.querySelector<PerspectiveViewerElement>('#viewer')!;
 // read the generators table from duckdb
 result = await conn.query("SELECT * FROM generators ORDER BY report_date;");
 
@@ -97,18 +108,12 @@ for (let i = 0; i < result.numRows; i++) {
     });
 }
 
-// const data = result.data.map((row) => {
-//     const obj: Record<string, any> = {};
-//     selected_columns.forEach((col) => {
-//         obj[col] = (row as Record<string, any>)[col];
-//     });
-//     return obj;
-// });
-const table = await client.table(data, {name: "generators",});
+const table = await client.table(data, {name: "generators", format: "json"});
 viewer.load(table);
 console.log(`viewer loaded: ${data.length} rows`);
-const container = document.querySelector<HTMLDivElement>('#perspective-container')!;
-container?.appendChild(viewer);
+// const container = document.querySelector<HTMLDivElement>('#perspective-container')!;
+// container.appendChild(viewer);
+// viewer.setAttribute("theme", "Pro Dark");
 
 
 // console.log(data);
@@ -123,3 +128,4 @@ container?.appendChild(viewer);
 //         console.log(`row ${i}: plant_name: ${row['plant_name_eia']}, date: ${report_date}, city: ${row['city']}`);
 //     }
 // }
+
