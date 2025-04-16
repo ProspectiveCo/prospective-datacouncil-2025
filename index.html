@@ -15,16 +15,22 @@
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <div id="status" class="label-text"></div>
-    <div id="app"></div>
-    <div id="controls">
-      <button id="download-arrow">Download CSV</button>
-      <button id="load-table">Download Parquet</button>
+    <div id="header">
+      <h1>Perspective + DuckDB</h1>
     </div>
+    
+    <div id="controls">
+      <div id="status" class="label-text">Status: Ready</div>
+      <div id="buttons">
+        <button id="download-arrow">Download CSV</button>
+        <button id="load-table">Download Parquet</button>
+      </div>
+    </div>
+    
     <div id="perspective-container">
       <perspective-viewer id="viewer" theme="Pro Dark"></perspective-viewer>
     </div>
-    <script type="module" src="/src/main.js"></script>
+
     <script type="module" src="/src/duckdb.ts"></script>
     <script type="module" src="/src/perspective.js"></script>
   </body>
