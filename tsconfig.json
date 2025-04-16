@@ -18,7 +18,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Additional Options */
+    "esModuleInterop": true, // Ensures compatibility with CommonJS modules
+    "forceConsistentCasingInFileNames": true // Enforces consistent file naming
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
