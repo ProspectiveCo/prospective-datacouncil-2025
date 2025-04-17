@@ -51,10 +51,11 @@ document.querySelector("#query").addEventListener("click", async () => {
             const row = result.get(i);
             return { ...row, report_date: new Date(row['report_date']).toISOString() };
         });
-        const viewer = document.querySelector("#viewer");
-        const table = await client.table(data, { name: "generators", format: "json" });
+        let viewer = document.querySelector("#viewer");
+        const table = await client.table(data, { format: "json" });
+        const config = { ...await viewer.save(), settings: true, plugin_config: { edit_mode: "READ_ONLY" } };
         viewer.load(table);
-        viewer.restore({ settings: true, plugin_config: { edit_mode: "READ_ONLY" } });
+        viewer.restore(config);
         setStatus(`Loaded ${data.length} rows.`, false);
     } catch (error) {
         setStatus("Failed to load table", false);

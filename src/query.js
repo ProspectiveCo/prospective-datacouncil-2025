@@ -1,5 +1,5 @@
 
-const START_DATE = new Date(2021, 11, 1); // December 1, 2021
+const START_DATE = new Date(2022, 0, 1); // December 1, 2021
 
 /**
  * Adds a specified number of whole months to a given date.
