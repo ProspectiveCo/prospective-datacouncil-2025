@@ -1,6 +1,6 @@
 import { client } from "./perspective.js";
 import { conn, db } from "./duckdb.js";
-
+import { getPredicates } from "./query.js";
 
 const GENERATORS_URL = "https://perspective-demo-dataset.s3.us-east-1.amazonaws.com/pudl/generators_monthly_2022-2023_lg.parquet";
 
@@ -13,7 +13,7 @@ export function setStatus(msg = "Ready", showSpinner = false) {
 }
 
 
-document.querySelector("#load-duckdb").addEventListener("click", async (event) => {
+document.querySelector("#load").addEventListener("click", async (event) => {
     try {
         setStatus("Loading DuckDB...", true);
         await conn.query(`
@@ -29,8 +29,7 @@ document.querySelector("#load-duckdb").addEventListener("click", async (event) =
 });
 
 
-
-document.querySelector("#load-table").addEventListener("click", async () => {
+document.querySelector("#query").addEventListener("click", async () => {
     try {
         setStatus(`Running query...`, true);
         const sql = `
@@ -40,9 +39,10 @@ document.querySelector("#load-table").addEventListener("click", async () => {
                 net_generation_mwh, capacity_mw, 
                 energy_source, fuel_type, technology_description, primary_mover
             FROM generators
-            WHERE report_date = '2023-01-01'
+            ${getPredicates()}
             ORDER BY report_date;
         `;
+        console.log("SQL:", sql);
         const result = await conn.query(sql);
         console.log(`db rows: ${result.numRows}`);
 
@@ -51,13 +51,13 @@ document.querySelector("#load-table").addEventListener("click", async () => {
             const row = result.get(i);
             return { ...row, report_date: new Date(row['report_date']).toISOString() };
         });
-
         const viewer = document.querySelector("#viewer");
         const table = await client.table(data, { name: "generators", format: "json" });
         viewer.load(table);
         viewer.restore({ settings: true, plugin_config: { edit_mode: "READ_ONLY" } });
         setStatus(`Loaded ${data.length} rows.`, false);
     } catch (error) {
+        setStatus("Failed to load table", false);
         console.error("Failed to load Perspective table:", error);
     }
 });
