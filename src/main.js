@@ -34,8 +34,13 @@ document.querySelector("#load-table").addEventListener("click", async () => {
     try {
         setStatus(`Running query...`, true);
         const sql = `
-            SELECT plant_name_eia, report_date, city, state, capacity_mw, energy_source, fuel_type
+            SELECT 
+                plant_name_eia as plant_name, report_date, 
+                city, state, county, latitude, longitude, timezone,
+                net_generation_mwh, capacity_mw, 
+                energy_source, fuel_type, technology_description, primary_mover
             FROM generators
+            WHERE report_date = '2023-01-01'
             ORDER BY report_date;
         `;
         const result = await conn.query(sql);
@@ -50,7 +55,7 @@ document.querySelector("#load-table").addEventListener("click", async () => {
         const viewer = document.querySelector("#viewer");
         const table = await client.table(data, { name: "generators", format: "json" });
         viewer.load(table);
-        console.log(`viewer loaded: ${data.length} rows`);
+        viewer.restore({ settings: true, plugin_config: { edit_mode: "READ_ONLY" } });
         setStatus(`Loaded ${data.length} rows.`, false);
     } catch (error) {
         console.error("Failed to load Perspective table:", error);
