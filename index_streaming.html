@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/prospective.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="DuckDB + Perspective" />
+
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@finos/perspective@3.4.3/dist/wasm/perspective-server.wasm" as="fetch" type="application/wasm" crossorigin="anonymous" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@finos/perspective-viewer@3.4.3/dist/wasm/perspective-viewer.wasm" as="fetch" type="application/wasm" crossorigin="anonymous" />
+    <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/@finos/perspective-viewer@3.4.3/dist/css/themes.css" />
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/dark.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <link rel="stylesheet" media="(prefers-color-scheme:dark)" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/dark.css" onload="document.documentElement.classList.add('sl-theme-dark');" />
+
+    <link rel="stylesheet" href="/src/style.css" />
+
+    <title>DuckDB + Perspective</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Perspective + DuckDB</h1>
+    </div>
+    
+    <div id="controls">
+      <sl-spinner id="spinner" style="display: none;"></sl-spinner>
+      <div id="status">Status: Ready</div>
+      <!-- <div id="buttons">
+
+        <sl-tooltip content="Load power plants data into DuckDB">
+          <sl-icon-button id="load" name="database" label="Load DB"></sl-icon-button>
+        </sl-tooltip>
+
+        <sl-tooltip content="Run query and load Perspective viewer">
+          <sl-icon-button id="query" name="arrow-clockwise" label="Run"></sl-icon-button>
+        </sl-tooltip>
+
+        <sl-tooltip content="Settings">
+          <sl-icon-button id="settings" name="gear" label="Settings" onclick="document.getElementById('settings-drawer').show()"></sl-icon-button>
+        </sl-tooltip>
+        <sl-drawer id="settings-drawer" label="Query Settings" placement="end" style="--size: 65vw; --body-spacing: 35px;">
+          <sl-range id="month-picker" min="0" max="24" step="1" tooltip="top" label="Month Picker" help-text="Select a month" value="0"></sl-range>
+
+          <sl-select id="fuel-type" label="Fuel Type" help-text="Select multiple power plant fuel types" multiple clearable>
+            <sl-option value="coal">Coal</sl-option>
+            <sl-option value="gas">Gas</sl-option>
+            <sl-option value="hydro">Hydro</sl-option>
+            <sl-option value="nuclear">Nuclear</sl-option>
+            <sl-option value="oil">Oil</sl-option>
+            <sl-option value="other">Other</sl-option>
+            <sl-option value="solar">Solar</sl-option>
+            <sl-option value="waste">Waste</sl-option>
+            <sl-option value="wind">Wind</sl-option>
+          </sl-select>
+
+        </sl-drawer>
+      </div> -->
+    </div>
+    
+    <div id="perspective-container">
+      <perspective-viewer id="viewer" theme="Pro Dark"></perspective-viewer>
+    </div>
+
+    <script type="module" src="/src/duckdb.ts"></script>
+    <script type="module" src="/src/perspective.js"></script>
+    <script type="module" src="/src/streaming.js"></script>
+  </body>
+</html>
