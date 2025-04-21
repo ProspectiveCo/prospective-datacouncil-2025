@@ -5,7 +5,7 @@ import { getPredicates } from "./query.js";
 const GENERATORS_URL = "https://perspective-demo-dataset.s3.us-east-1.amazonaws.com/pudl/generators_monthly_2022-2023_lg.parquet";
 
 
-export function setStatus(msg = "Ready", showSpinner = false) {
+function setStatus(msg = "Ready", showSpinner = false) {
     const statusDiv = document.querySelector("#status");
     const spinner = document.querySelector("#spinner");
     spinner.style.display = showSpinner ? "inline-block" : "none";
