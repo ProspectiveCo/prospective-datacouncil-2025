@@ -1,5 +1,5 @@
-import { client } from "./perspective.js";
 import { conn, db } from "./duckdb.js";
+import { client } from "./perspective.js";
 import { getPredicates } from "./query.js";
 
 const GENERATORS_URL = "https://perspective-demo-dataset.s3.us-east-1.amazonaws.com/pudl/generators_monthly_2022-2023_lg.parquet";
