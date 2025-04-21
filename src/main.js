@@ -1,4 +1,4 @@
-import { conn, db } from "./duckdb.js";
+import { conn } from "./duckdb.js";
 import { client } from "./perspective.js";
 import { getPredicates } from "./query.js";
 
