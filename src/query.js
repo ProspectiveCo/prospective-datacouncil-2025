@@ -10,6 +10,19 @@ function addWholeMonths(date, months) {
     return newDate;
 }
 
+/**
+ * Setting up the month picker tooltip.
+ * The tooltip will show the month and year of the selected date.
+ */
+const monthPicker = document.querySelector('#month-picker');
+monthPicker.tooltipFormatter = value => {
+    const selectedDate = addWholeMonths(START_DATE, value);
+    return selectedDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+};
+
+/**
+ * Getting the fuel type predicate based on the selected fuel types.
+ */
 export function getFuelTypePredicate() {
     const fuelType = String(document.querySelector("#fuel-type").value);
     if (!fuelType) {
@@ -20,6 +33,9 @@ export function getFuelTypePredicate() {
     return fuelTypePredicate;
 }
 
+/**
+ * Getting the month predicate based on the selected month.
+ */
 export function getMonthPredicate() {
     const monthPicker = document.querySelector('#month-picker');
     const monthPicked = addWholeMonths(START_DATE, monthPicker.value);
@@ -30,12 +46,10 @@ export function getMonthPredicate() {
     return monthPredicate;
 }
 
-const monthPicker = document.querySelector('#month-picker');
-monthPicker.tooltipFormatter = value => {
-    const selectedDate = addWholeMonths(START_DATE, value);
-    return selectedDate.toLocaleString('default', { month: 'long', year: 'numeric' });
-};
-
+/**
+ * Constructing the WHERE clause for the SQL query based on selected filters.
+ * It combines month and fuel type predicates if they are set.
+ */
 export function getPredicates() {
     const monthPredicate = getMonthPredicate();
     const fuelTypePredicate = getFuelTypePredicate();
