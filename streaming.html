@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/prospective.png" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="DuckDB + Perspective" />
 
@@ -26,43 +26,29 @@
     <div id="controls">
       <sl-spinner id="spinner" style="display: none;"></sl-spinner>
       <div id="status">Status: Ready</div>
-      <!-- <div id="buttons">
-
-        <sl-tooltip content="Load power plants data into DuckDB">
-          <sl-icon-button id="load" name="database" label="Load DB"></sl-icon-button>
-        </sl-tooltip>
-
-        <sl-tooltip content="Run query and load Perspective viewer">
-          <sl-icon-button id="query" name="arrow-clockwise" label="Run"></sl-icon-button>
-        </sl-tooltip>
-
-        <sl-tooltip content="Settings">
-          <sl-icon-button id="settings" name="gear" label="Settings" onclick="document.getElementById('settings-drawer').show()"></sl-icon-button>
-        </sl-tooltip>
-        <sl-drawer id="settings-drawer" label="Query Settings" placement="end" style="--size: 65vw; --body-spacing: 35px;">
-          <sl-range id="month-picker" min="0" max="24" step="1" tooltip="top" label="Month Picker" help-text="Select a month" value="0"></sl-range>
-
-          <sl-select id="fuel-type" label="Fuel Type" help-text="Select multiple power plant fuel types" multiple clearable>
-            <sl-option value="coal">Coal</sl-option>
-            <sl-option value="gas">Gas</sl-option>
-            <sl-option value="hydro">Hydro</sl-option>
-            <sl-option value="nuclear">Nuclear</sl-option>
-            <sl-option value="oil">Oil</sl-option>
-            <sl-option value="other">Other</sl-option>
-            <sl-option value="solar">Solar</sl-option>
-            <sl-option value="waste">Waste</sl-option>
-            <sl-option value="wind">Wind</sl-option>
-          </sl-select>
-
+      <div id="buttons">
+        <sl-button-group label="Alignment">
+          <sl-tooltip content="Run">
+            <sl-icon-button id="run" name="play" label="Run"></sl-icon-button>
+          </sl-tooltip>
+          <sl-tooltip content="Stop">
+            <sl-icon-button id="stop" name="stop" label="Stop"></sl-icon-button>
+          </sl-tooltip>
+          <sl-tooltip content="Settings">
+            <sl-icon-button id="settings" name="gear" label="Settings" onclick="document.getElementById('settings-drawer').show()"></sl-icon-button>
+          </sl-tooltip>
+        </sl-button-group>
+        <sl-drawer id="settings-drawer" label="Query Settings" placement="end" style="--size: 50vw; --body-spacing: 35px;">
+          <sl-range id="interval" min="100" max="1000" step="50" value="500" label="Interval" help-text="Perspective table refresh rate: ms"></sl-range>
         </sl-drawer>
-      </div> -->
+      </div>
     </div>
     
     <div id="perspective-container">
       <perspective-viewer id="viewer" theme="Pro Dark"></perspective-viewer>
     </div>
 
-    <script type="module" src="/src/duckdb.ts"></script>
+    <script type="module" src="/src/duckdb.js"></script>
     <script type="module" src="/src/perspective.js"></script>
     <script type="module" src="/src/streaming.js"></script>
   </body>
