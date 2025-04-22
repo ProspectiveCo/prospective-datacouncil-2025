@@ -1,6 +1,5 @@
 import { conn } from "./duckdb.js";
 import { client } from "./perspective.js";
-import { getPredicates } from "./query.js";
 
 
 const PLANTS_URL = "https://perspective-demo-dataset.s3.us-east-1.amazonaws.com/pudl/generators_monthly_2020-2023.parquet";
@@ -25,8 +24,19 @@ function setStatus(msg = "Ready", showSpinner = false) {
 
 
 document.querySelector("#load").addEventListener("click", async (event) => {
+    try {
+        setStatus("Loading DuckDB...", true);
+        await conn.query(`
+            CREATE TABLE generators AS
+            SELECT * FROM '${PLANTS_URL}'
+        `);
+        const numRows = (await conn.query("SELECT COUNT(*) as 'numrows' FROM generators")).get(0)['numrows'];
+        setStatus(`DuckDB loaded: ${numRows} rows`, false);
+        event.target.disabled = true;
+    } catch (error) {
+        setStatus("Failed to load DuckDB", false);
+    }
 });
 
 document.querySelector("#query").addEventListener("click", async (event) => {
-
 });
