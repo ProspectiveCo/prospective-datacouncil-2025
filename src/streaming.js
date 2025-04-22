@@ -8,7 +8,7 @@ const END_MONTH = new Date(2024, 0, 1);
 let currDate = START_MONTH;
 let viewSet = false;
 
-const VIEW_CONFIG_1 = {
+const VIEW_CONFIG = {
     plugin: "Datagrid",
     plugin_config: { edit_mode: "READ_ONLY" },
     settings: false,
@@ -17,7 +17,7 @@ const VIEW_CONFIG_1 = {
     group_by: ["state"],
     split_by: ["fuel_type"],
     columns: ["net_gen_mwh"],
-    filter: [["net_gen_mwh", ">", 0]],
+    filter: [["net_gen_mwh", ">", 0], ["state", "is not null", null]],
     sort: [["state", "asc"]],
     expressions: {},
     aggregates: {}
@@ -76,10 +76,9 @@ async function createPerspectiveTable() {
         tech_desc: "string",
     };
     const table = await client.table(schema, { name: "generators", index: "plant_id" });
+    // const table = await client.table(schema, { name: "generators", limit: 300_000});
     const viewer = document.querySelector("#viewer");
-    // const config = { ...await viewer.save(), settings: true, plugin_config: { edit_mode: "READ_ONLY" } };
     viewer.load(table);
-    // viewer.restore(config);
     return table;
 }
 
@@ -107,9 +106,10 @@ async function updatePerspectiveTable(table) {
         if (currDate >= END_MONTH) {
             currDate = START_MONTH;
         }
+        // Set the view options only once
         if (!viewSet) {
             const viewer = document.querySelector("#viewer");
-            viewer.restore(VIEW_CONFIG_1);
+            viewer.restore(VIEW_CONFIG);
             viewSet = true;
         }
     } catch (error) {
@@ -121,4 +121,22 @@ async function updatePerspectiveTable(table) {
 
 await loadDuckDB();
 const table = await createPerspectiveTable();
-setInterval(() => updatePerspectiveTable(table), 250);
+let timer = null;
+timer = setInterval(() => updatePerspectiveTable(table), 500);
+
+document.querySelector("#stop").addEventListener("click", () => {
+    clearInterval(timer);
+    setStatus("Timer stopped", false);
+});
+
+document.querySelector("#run").addEventListener("click", () => {
+    const intervalElement = document.querySelector("#interval");
+    const interval = intervalElement.value || 250;
+    timer = setInterval(() => updatePerspectiveTable(table), interval);
+});
+
+document.querySelector("#interval").addEventListener("sl-change", (event) => {
+    clearInterval(timer);
+    const interval = event.target.value;
+    timer = setInterval(() => updatePerspectiveTable(table), interval);
+});
