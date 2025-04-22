@@ -130,6 +130,9 @@ document.querySelector("#stop").addEventListener("click", () => {
 });
 
 document.querySelector("#run").addEventListener("click", () => {
+    if (timer) {
+        clearInterval(timer);
+    }
     const intervalElement = document.querySelector("#interval");
     const interval = intervalElement.value || 250;
     timer = setInterval(() => updatePerspectiveTable(table), interval);
