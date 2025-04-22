@@ -1,8 +1,8 @@
 # Prospective Data Council 2025
 
-This is the Prospective workshop in Data Council 2025, focusing on a innovative _**local-first**_ approach to data analysis. 
+**[Prospective](https://prospective.co)** workshop in Data Council 2025, focusing on an innovative _**local-first**_ approach for data analysis. 
 
-In this workshop, we will explore how to integrate **[DuckDB](https://duckdb.org/)** and **[Perspective](https://github.com/finos/perspective)** to create an all in-browser, WebAssembly (WASM)-based, high-performance data visualization and analysis solution. 
+In this workshop, we will explore how to integrate [DuckDB](https://duckdb.org/) and [Perspective](https://github.com/finos/perspective) to create an all in-browser, WebAssembly (WASM)-based, high-performance data visualization and analysis solution. 
 
 <br/>
 
@@ -53,3 +53,7 @@ Open **Chrome** and navigate to: [http://localhost:5173/streaming.html](http://l
 
 This application simulates a data stream by playing the power plants dataset month by month at short intervals (e.g., 250ms).
 
+
+<br/><br/>
+
+Questions and comments: parham@prospective.co
