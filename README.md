@@ -6,11 +6,11 @@ In this workshop, we will explore how to integrate [DuckDB](https://duckdb.org/)
 
 <br/>
 
-## Prospective Dashboard
+## Prospective Overview Dashboard
 
 [![PRO Dashboard](./public/pro_dashboard.png)](https://prospective.co/?q=9QIkBG3uHlc)
 
-[**Click here**](https://prospective.co/?q=9QIkBG3uHlc) to explore an _interactive_ dashboard.
+[**Click here**](https://prospective.co/?q=9QIkBG3uHlc) to explore the _interactive_ dashboard.
 
 This dashboard introduces the dataset and highlights the basic features of Prospective.
 
