@@ -32,13 +32,15 @@ document.querySelector("#load").addEventListener("click", async (event) => {
 
 document.querySelector("#query").addEventListener("click", async () => {
     try {
+        const startTime = performance.now();
+
         setStatus(`Running query...`, true);
         const sql = `
             SELECT 
-                plant_name, report_date, 
-                city, state, county, lat, lon,
-                status_code, net_gen_mwh, capacity, 
-                fuel_type, tech_desc
+            plant_name, report_date, 
+            city, state, county, lat, lon,
+            status_code, net_gen_mwh, capacity, 
+            fuel_type, tech_desc
             FROM generators
             ${getPredicates()}
             ORDER BY report_date;
@@ -54,9 +56,11 @@ document.querySelector("#query").addEventListener("click", async () => {
         viewer.load(table);
         viewer.restore(config);
 
-        setStatus(`Loaded ${data.length} rows.`, false);
+        const endTime = performance.now();
+
+        setStatus(`Loaded ${data.length} rows - ${(endTime - startTime).toFixed(2)} ms`, false);
     } catch (error) {
-        setStatus("Failed to load table", false);
-        console.error("Failed to load Perspective table:", error);
+        setStatus("Failed to load table. Be sure to load DuckDB first (DB icon ->)", false);
+        console.error("Failed to load Perspective table.", error);
     }
 });
