@@ -1,8 +1,9 @@
 
-const START_DATE = new Date(2020, 0, 1); // December 1, 2021
+const START_DATE = new Date(2020, 0, 1); // Data starting date
+const END_DATE = new Date(2023, 11, 1); // Data ending date
 
 /**
- * Adds a specified number of whole months to a given date.
+ * Adds months to the given date; advancing the date by the number of months specified.
  */
 function addWholeMonths(date, months) {
     const newDate = new Date(date);
