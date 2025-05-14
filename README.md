@@ -1,4 +1,4 @@
-# Prospective Data Council 2025
+# Prospective - Local-first
 
 **[Prospective](https://prospective.co)** workshop in Data Council 2025, focusing on an innovative _**local-first**_ approach for data analysis. 
 
